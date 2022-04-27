@@ -52,9 +52,9 @@ const products_reducer = (state, action) => {
         single_product_error: true,
         single_product_loading: false,
       };
+    default:
+      throw new Error(`No Matching "${action.type}" - action type`);
   }
-
-  throw new Error(`No Matching "${action.type}" - action type`);
 };
 
 export default products_reducer;

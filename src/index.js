@@ -13,9 +13,11 @@ const container = document.getElementById("root");
 createRoot(container).render(
   <React.StrictMode>
     <ProductsProvider>
-      <Router>
-        <App />
-      </Router>
+      <FilterProvider>
+        <Router>
+          <App />
+        </Router>
+      </FilterProvider>
     </ProductsProvider>
   </React.StrictMode>
 );
