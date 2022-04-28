@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
-import { services } from "../utils/constants";
+import { services, aboutUs } from "../utils/constants";
 
 const Services = () => {
   return (
@@ -8,9 +9,9 @@ const Services = () => {
       <div className="section-center">
         <article className="header">
           <h3>
-            custom furniture
+            come to see
             <br />
-            built only for you
+            our wonderful furniture
           </h3>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur
@@ -19,14 +20,22 @@ const Services = () => {
           </p>
         </article>
         <div className="services-center">
-          {services.map((service) => {
-            const { id, icon, title, text } = service;
+          {aboutUs.map((service) => {
+            const { id, icon, text, image } = service;
+            console.log(image);
             return (
-              <article key={id} className="service">
+              <Link
+                to="#"
+                key={id}
+                className="service"
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${image}})`,
+                }}
+              >
                 <span className="icon">{icon}</span>
-                <h4>{title}</h4>
+
                 <p>{text}</p>
-              </article>
+              </Link>
             );
           })}
         </div>
@@ -56,14 +65,18 @@ const Wrapper = styled.section`
     margin-top: 4rem;
     display: grid;
     gap: 2.5rem;
+    height: 200px;
   }
   .service {
-    background: var(--clr-primary-7);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     text-align: center;
     padding: 2.5rem 2rem;
     border-radius: var(--radius);
     p {
-      color: var(--clr-primary-2);
+      color: var(--clr-primary-10);
+      text-transform: capitalize;
     }
   }
   span {
