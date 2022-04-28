@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
 import cartLogo from "../assets/Ecommerce-Logo-Vector.svg";
-import logo from "../assets/logo.svg";
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { links } from "../utils/constants";
@@ -11,6 +10,7 @@ import { useUserContext } from "../context/user_context";
 
 const Nav = () => {
   const { openSidebar } = useProductsContext();
+  const { user } = useUserContext();
 
   return (
     <>
@@ -18,7 +18,7 @@ const Nav = () => {
         <div className="nav-center">
           <div className="nav-header">
             <Link to="/">
-              <img src={logo} alt="logo" />
+              <img src={cartLogo} alt="logo" />
             </Link>
             <button type="button" className="nav-toggle" onClick={openSidebar}>
               <FaBars />
@@ -33,6 +33,11 @@ const Nav = () => {
                 </li>
               );
             })}
+            {user ? (
+              <li>
+                <Link to="/checkout">Check Out</Link>
+              </li>
+            ) : null}
           </ul>
           <CartButtons />
         </div>

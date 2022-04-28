@@ -1,10 +1,17 @@
 import React from "react";
-import { FeaturedProducts, Hero, Services, Contact } from "../components";
+import {
+  FeaturedProducts,
+  Hero,
+  Services,
+  Contact,
+  SecondHero,
+} from "../components";
 const HomePage = () => {
   return (
     <>
       <Hero />
       <FeaturedProducts />
+      <SecondHero />
       <Services />
       <Contact />
     </>

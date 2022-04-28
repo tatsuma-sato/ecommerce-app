@@ -1,7 +1,11 @@
 // import axios from 'axios'
 import React, { useContext, useEffect, useReducer } from "react";
 import reducer from "../reducers/products_reducer";
-import { products_url as url, single_product_url } from "../utils/constants";
+import {
+  products_url as url,
+  single_product_url,
+  fetchAllProductsUrl,
+} from "../utils/constants";
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
@@ -12,6 +16,14 @@ import {
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
 } from "../actions";
+
+const options = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Host": "asos2.p.rapidapi.com",
+    "X-RapidAPI-Key": "eb84cb2456msh10e56651eedaba4p1d5a63jsn9a52a490afbf",
+  },
+};
 
 const initialState = {
   isSidebarOpen: false,
@@ -30,18 +42,20 @@ export const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const openSidebar = () => {
-    dispatch({ type: "SIDEBAR_OPEN" });
+    dispatch({ type: SIDEBAR_OPEN });
   };
 
   const closeSidebar = () => {
-    dispatch({ type: "SIDEBAR_CLOSE" });
+    dispatch({ type: SIDEBAR_CLOSE });
   };
 
   const fetchProducts = async (url) => {
     dispatch({ type: GET_PRODUCTS_BEGIN });
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, options);
+
       const data = await response.json();
+
       dispatch({ type: GET_PRODUCTS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: GET_PRODUCTS_ERROR });

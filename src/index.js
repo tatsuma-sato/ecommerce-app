@@ -6,18 +6,22 @@ import { ProductsProvider } from "./context/products_context";
 import { FilterProvider } from "./context/filter_context";
 import { CartProvider } from "./context/cart_context";
 import { UserProvider } from "./context/user_context";
-import { Auth0Provider } from "@auth0/auth0-react";
+
 import { BrowserRouter as Router } from "react-router-dom";
 
 const container = document.getElementById("root");
 createRoot(container).render(
   <React.StrictMode>
-    <ProductsProvider>
-      <FilterProvider>
-        <Router>
-          <App />
-        </Router>
-      </FilterProvider>
-    </ProductsProvider>
+    <UserProvider>
+      <ProductsProvider>
+        <FilterProvider>
+          <CartProvider>
+            <Router>
+              <App />
+            </Router>
+          </CartProvider>
+        </FilterProvider>
+      </ProductsProvider>
+    </UserProvider>
   </React.StrictMode>
 );

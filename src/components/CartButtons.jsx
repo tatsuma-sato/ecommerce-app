@@ -1,13 +1,30 @@
 import React from "react";
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components/macro";
 import { useProductsContext } from "../context/products_context";
 import { useCartContext } from "../context/cart_context";
 import { useUserContext } from "../context/user_context";
-
+import { getAuth } from "firebase/auth";
 const CartButtons = () => {
+  const navigate = useNavigate();
+  const auth = getAuth();
   const { closeSidebar } = useProductsContext();
+  const { total_items, clearCart } = useCartContext();
+  const { user } = useUserContext();
+
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        closeSidebar();
+        clearCart();
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -16,15 +33,21 @@ const CartButtons = () => {
           Cart
           <span className="cart-container">
             <FaShoppingCart />
-            <span className="cart-value">12</span>
+            <span className="cart-value">{total_items}</span>
           </span>
         </Link>
-        <button type="button" className="auth-btn">
-          <Link to="/login" onClick={closeSidebar}>
-            Login
+
+        {user ? (
+          <button type="button" className="auth-btn" onClick={handleSignOut}>
+            Sign Out
+            <FaUserMinus />
+          </button>
+        ) : (
+          <Link to="/sign-in" onClick={closeSidebar} className="auth-btn">
+            Sign In
+            <FaUserPlus />
           </Link>
-          <FaUserPlus />
-        </button>
+        )}
       </Wrapper>
     </>
   );
@@ -34,7 +57,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  width: 225px;
+  width: 280px;
 
   .cart-btn {
     color: var(--clr-grey-1);
